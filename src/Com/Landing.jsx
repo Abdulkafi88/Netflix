@@ -87,10 +87,7 @@ const Landing = () => {
             </div>
 
             <div class="email-form">
-              <p>
-                Ready to watch? Enter your email to create or restart your
-                membership.
-              </p>
+             
 
               <div class="get-started">
                 <input type="text" name="" id="" placeholder="Email address" />
