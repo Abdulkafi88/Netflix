@@ -6,6 +6,9 @@ import "../Style/Content.css"
 import img from "../assets/netflix-logo.jpg"
 const Content = ({ type }) => {
   const [discover, setdiscover] = useState([])
+  const [mainimgs ,setmainimgs] = useState([])
+  const [movieTitle,setMovieTitle]= useState([])
+  const[overview,setoverview] = useState([])
   useEffect(() => {
     const fetchMovies = async () => {
       try {
@@ -13,10 +16,15 @@ const Content = ({ type }) => {
           "https://api.themoviedb.org/3/discover/tv?api_key=19f84e11932abbc79e6d83f82d6d1045&with_networks=213"
         )
         const movieData = await movieResponse.json()
-
-        const limitedMovies = movieData.results.slice(0, 9)
-
+          const mainImg = movieData.results.slice(0, 1)
+          const movieTitle = movieData.results[0].name
+          const overview = movieData.results[0].overview
+            setoverview(overview)
+            setMovieTitle(movieTitle)
+        const limitedMovies = movieData.results.slice(0, 4)
+          setmainimgs(mainImg)
         setdiscover(limitedMovies)
+        console.log(movieData.results)
       } catch (error) {
         console.error("Error fetching movies:", error)
       }
@@ -56,41 +64,24 @@ const Content = ({ type }) => {
         </div>
       </div>
       <div className="featured">
-        {type && (
-          <div className="category">
-            <span>{type === "movie" ? "Movies" : "Series"}</span>
-            <select name="genre" id="genre">
-              <option>Genre</option>
-              <option value="adventure">Adventure</option>
-              <option value="comedy">Comedy</option>
-              <option value="crime">Crime</option>
-              <option value="fantasy">Fantasy</option>
-              <option value="historical">Historical</option>
-              <option value="horror">Horror</option>
-              <option value="romance">Romance</option>
-              <option value="sci-fi">Sci-fi</option>
-              <option value="thriller">Thriller</option>
-              <option value="western">Western</option>
-              <option value="animation">Animation</option>
-              <option value="drama">Drama</option>
-              <option value="documentary">Documentary</option>
-            </select>
-          </div>
-        )}
-        <img
+        {/* <img
           src="https://images.pexels.com/photos/6899260/pexels-photo-6899260.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"
           alt=""
-        />
-        <div className="info">
+        /> */}
+        {mainimgs.map((mainimgsMovies, index) => (
           <img
-            src="https://occ-0-1432-1433.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABUZdeG1DrMstq-YKHZ-dA-cx2uQN_YbCYx7RABDk0y7F8ZK6nzgCz4bp5qJVgMizPbVpIvXrd4xMBQAuNe0xmuW2WjoeGMDn1cFO.webp?r=df1"
+            src={`https://image.tmdb.org/t/p/original${mainimgsMovies?.backdrop_path}`}
             alt=""
           />
+        ))}
+        <div className="info">
+          {/* <img
+            src="https://occ-0-1432-1433.1.nflxso.net/dnm/api/v6/LmEnxtiAuzezXBjYXPuDgfZ4zZQ/AAAABUZdeG1DrMstq-YKHZ-dA-cx2uQN_YbCYx7RABDk0y7F8ZK6nzgCz4bp5qJVgMizPbVpIvXrd4xMBQAuNe0xmuW2WjoeGMDn1cFO.webp?r=df1"
+            alt=""
+          /> */}
+          <h1>{movieTitle}</h1>
           <span className="desc">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae
-            adipisci repellendus eum quasi illo, velit numquam, maxime tempora
-            sint deleniti, aliquid qui? Facilis, adipisci! Ratione hic
-            repudiandae temporibus eum earum?
+           <p>{overview}</p>
           </span>
           <div className="buttons">
             <button className="play">
@@ -103,20 +94,18 @@ const Content = ({ type }) => {
           </div>
         </div>
       </div>
-      <div className="list">
-        <span className="listTitle">Continue to watch</span>
-        <div className="wrapper">
-          <div className="container">
-            {discover.map((movies, index) => (
-              <img
-                key={index}
-                className="movies"
-                src={`https://image.tmdb.org/t/p/w200${movies.poster_path}`}
-                alt={movies.title}
-                style={{ height: "200px", objectFit: "cover" }}
-              />
-            ))}
-          </div>
+      <div class="netflixOriginals">
+        <div class="original__header">
+          <h2>NETFLIX ORIGINALS</h2>
+        </div>
+        <div class="original__movies">
+          {discover.map((movies, index) => (
+            <img
+              key={index}
+              src={`https://image.tmdb.org/t/p/original${movies?.backdrop_path}`}
+              alt=""
+            />
+          ))}
         </div>
       </div>
     </>
