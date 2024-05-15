@@ -4,6 +4,7 @@ import { useState } from "react";
 import {Link} from 'react-router-dom'
 const Landing = () => {
   const [info, setInfo] = useState(false);
+  return
 
   const [faqInfo, setFaqInfo] = useState([
     {
@@ -70,13 +71,13 @@ const Landing = () => {
     <>
       <div class="outter-container">
         <header class="header">
-         <nav class="logos">
+          <nav class="logos">
             <img src="https://i.ibb.co/r5krrdz/logo.png" alt="Netflix" />
-            <Link to={'Content'} class="btn">
+            <Link to={"Sign"} class="btn">
               {" "}
               Sign In
             </Link>
-          </nav> 
+          </nav>
 
           <div class="inner-container">
             <div class="inner-title">
@@ -87,8 +88,6 @@ const Landing = () => {
             </div>
 
             <div class="email-form">
-             
-
               <div class="get-started">
                 <input type="text" name="" id="" placeholder="Email address" />
                 <a href="" class="btn-lg">
@@ -258,7 +257,7 @@ const Landing = () => {
         </footer>
       </div>
     </>
-  );
+  )
 };
 
 export default Landing;
